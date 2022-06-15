@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/CustomWidgets/Alerts.dart';
 import 'dart:async';
 import 'NavScreen.dart';
+import 'UpdateMyPassword/UpdatePw.dart';
 import 'WelcomeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignInForm extends StatefulWidget {
@@ -31,6 +34,34 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   final _formKey = GlobalKey<FormState>();
+  TextEditingController controller1=TextEditingController();
+  TextEditingController controller2=TextEditingController();
+  String email ='';
+  String password ='';
+
+  Future<void> SignIn() async{
+    email=controller1.text;
+    password=controller2.text;
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context)=>MainPage(),
+          ),
+        );
+
+      });
+
+    } on FirebaseAuthException catch(e) {
+      showErrorDialog(context);
+
+    }
+
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +86,12 @@ class _SignInFormState extends State<SignInForm> {
           backgroundColor: Colors.grey.shade800,
           resizeToAvoidBottomInset: false,
           body: Container(
+            decoration: BoxDecoration(
+              gradient:  LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [Colors.indigoAccent.shade700, Colors.grey.shade900],
+              ),),
             padding: EdgeInsets.only(bottom: 150.0),
             child: Center(
               child: Form(
@@ -99,17 +136,43 @@ class _SignInFormState extends State<SignInForm> {
                                     value=true;
                                   });
                                 }),
+                            ElevatedButton(onPressed: (){},
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UpdatePw(),
+                                    ),
+                                  );
+                                },
+                                child:
+                                Text(
+                                  "Şifremi Unuttum",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      color: Colors.white70),
+                                ),
+                              )
+
+                            ),
                           ],
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.greenAccent.shade700
                           ),
-                          child: Text("Giriş Yap!", style: TextStyle(color: Colors.white,fontSize: 18),),
-                          onPressed: () {
-                              route(); // Route fonksiyonunu çağırıp main page e gidiyorum.
+                          onPressed: (){
+                            SignIn();
                           },
-                        ),
+                            child: Text("Giriş Yap!",style: TextStyle(
+                                color: Colors.black,
+                                letterSpacing: 2,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                          ),
+                        
                       ],
                     ),
                   )
@@ -127,6 +190,7 @@ class _SignInFormState extends State<SignInForm> {
       style: TextStyle(color: Colors.white,fontSize: 18),
       // Şifrenin * şeklinde görünmesi
       obscureText: true,
+      controller: controller2,
       decoration: InputDecoration(
 
         errorStyle: TextStyle(color: Colors.white,fontSize: 15),
@@ -146,6 +210,7 @@ class _SignInFormState extends State<SignInForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       style: TextStyle(color: Colors.white,fontSize: 18),
+      controller: controller1,
       decoration: InputDecoration(
         errorStyle: TextStyle(color: Colors.white,fontSize: 15),
         label: const Center(

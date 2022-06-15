@@ -1,5 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled/Screens/Dosya%C4%B0slemleri/SorgulamaEkran.dart';
+import 'dart:async';
+
+import 'package:untitled/Screens/ProfileScreens/ProfileInfos.dart';
+import 'package:untitled/Screens/ProfileScreens/BodySizes.dart';
+import 'package:untitled/Screens/ProfileScreens/Inbox.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'PremiumList/PremiumList.dart';
 
 
 class Profile extends StatefulWidget {
@@ -11,7 +21,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
+
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       body: Center(
@@ -26,26 +38,38 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(width: 10,height: 20,),
-              Text("realjason@example.com",style: TextStyle(color: Colors.amber.shade700,fontSize: 16,letterSpacing: 0.4)),
+              Text("Someonexample@gmail.com",style: TextStyle(color: Colors.amber.shade700,fontSize: 16,letterSpacing: 0.4)),
               Container(
                 padding: EdgeInsets.only(top: 50.0),
                 child: MaterialButton(
                   minWidth: 250,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   color: Colors.grey.shade700,
                   shape: RoundedRectangleBorder(
                       side: BorderSide(
                         color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(40)),
-                  child: Text(
-                    "Profil Bilgileri",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white70),
-                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileInfos(),
+                        ),
+                      );
+                    },
+                    child:
+                    Text(
+                      "Profil Bilgileri",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Colors.white70),
+                    ),
+                  )
                 ),
               ),
               Container(
@@ -53,14 +77,24 @@ class _ProfileState extends State<Profile> {
                 child: MaterialButton(
                   minWidth: 250,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   color: Colors.grey.shade700,
                   shape: RoundedRectangleBorder(
                       side: BorderSide(
                         color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(40)),
-                  child: Text(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BodySizes(),
+                        ),
+                      );
+                    },
+                    child: Text(
                     "Vücut Ölçülerim",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -69,6 +103,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
+              ),
               Container(
                 padding: EdgeInsets.only(top: 20.0),
                 child: MaterialButton(
@@ -81,13 +116,23 @@ class _ProfileState extends State<Profile> {
                         color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(40)),
-                  child: Text(
-                    "Mevcut - Hedef Kalorilerim",
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PremiumsListed(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                    "Premium`a Geç",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                         color: Colors.white70),
                   ),
+                  )
                 ),
               ),
               Container(
@@ -123,13 +168,24 @@ class _ProfileState extends State<Profile> {
                         color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(40)),
-                  child: Text(
-                    "Yardım",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white70),
-                  ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SorgulamaEkran(),
+                          ),
+                        );
+                      },
+                      child:
+                      Text(
+                        "Mail Gönder",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white70),
+                      ),
+                    )
                 ),
               ),
               Container(
@@ -137,7 +193,9 @@ class _ProfileState extends State<Profile> {
                 child: MaterialButton(
                   minWidth: 250,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Inbox()));
+                  },
                   color: Colors.grey.shade700,
                   shape: RoundedRectangleBorder(
                       side: BorderSide(
@@ -145,7 +203,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       borderRadius: BorderRadius.circular(40)),
                   child: Text(
-                    "Gizlilik & Koşullar",
+                    "Gelen Kutusu",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,

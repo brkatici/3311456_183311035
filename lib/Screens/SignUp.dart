@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/Screens/SignIn.dart';
 import 'dart:async';
 import 'NavScreen.dart';
+import 'dart:math';
 import 'WelcomeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -12,29 +17,56 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
 
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  String email ='';
+  String password ='';
+  String passwordCheck ='';
+
+  TextEditingController controller1=TextEditingController();
+  TextEditingController controller2=TextEditingController();
+  TextEditingController controller3=TextEditingController();
+
+
   @override
 
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    startTimer(); // Route  için bir timer başlatıyorum
-  }
-  startTimer() async { // Timer ayarları için fonksiyon
-    var duration = new Duration(seconds:9000);
-    return new Timer(duration, route); // Timer`ın nereyi etkileyeceği
-  }
-  route() { //MainPage`e navigate eden fonksiyon
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => MainPage()
-    )
-    );
-  }
 
   //Global key daha sonrasında database işlemleri için formu özelleştirmemi sağladı.
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+
+    //Firebase işlemleri
+
+
+   Future<void> addUserToDatabase() async{
+     email = controller1.text;
+     password=controller2.text;
+     passwordCheck=controller3.text;
+
+
+        CollectionReference usersRef=
+        FirebaseFirestore.instance.collection('Users');
+
+
+        Map<String,dynamic> userData={'Mail':email,'Password':password,'DateTime':DateTime.now()};
+
+        await usersRef.doc(email).set(userData).then((value) =>
+            FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password));
+
+
+
+
+    }
+
+
+
+
+
+
+
+
     return WillPopScope(
 
       onWillPop: ()async{ // AppBar daki geri okunun navigasyonunu sağlıyorum
@@ -50,13 +82,18 @@ class _SignUpFormState extends State<SignUpForm> {
               
             ),
             centerTitle: true,
-            backgroundColor: Colors.indigo.shade300,
             title: Text('Kayıt-Ol',),
 
           ),
           backgroundColor: Colors.indigo,
           resizeToAvoidBottomInset: false,
           body: Container(
+            decoration: BoxDecoration(
+              gradient:  LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [Colors.indigoAccent.shade700, Colors.grey.shade900],
+              ),),
             padding: EdgeInsets.only(bottom: 150.0),
             child: Center(
               child: Form(
@@ -97,12 +134,28 @@ class _SignUpFormState extends State<SignUpForm> {
                       ElevatedButton(
 
                         style: ElevatedButton.styleFrom(
+                          minimumSize: Size(120, 50),
                             primary: Colors.amber
                         ),
-                        child: Text("Kaydol", style: TextStyle(color: Colors.indigoAccent.shade700,fontSize: 18),),
                           onPressed: () {
-                            route();
-                          }
+                          },
+                        child: InkWell(
+                          onTap: () {
+                            addUserToDatabase();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignInForm(),
+                              ),
+                            );
+                          },
+                          child: Text("Kayıt ol!",style: TextStyle(
+                              color: Colors.black,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                        ),
+
 
                           ),
                     ],
@@ -120,6 +173,7 @@ class _SignUpFormState extends State<SignUpForm> {
     return TextFormField(
       style: TextStyle(color: Colors.white,fontSize: 18),
       obscureText: true,// Şifrenin * şeklinde görünmesi
+      controller: controller2,
       decoration: InputDecoration(
         errorStyle: TextStyle(color: Colors.white,fontSize: 15),
         label: const Center(
@@ -140,6 +194,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildChckPassFormField() {
     return TextFormField(
       obscureText: true, // Şifrenin * şeklinde görünmesi
+      controller: controller3,
       style: TextStyle(color: Colors.white,fontSize: 18),
       decoration: InputDecoration(
         errorStyle: TextStyle(color: Colors.white,fontSize: 15),
@@ -155,9 +210,9 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
-
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: controller1,
       style: TextStyle(color: Colors.white,fontSize: 18),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(

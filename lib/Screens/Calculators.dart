@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:untitled/Screens/BodyIndex.dart';
 import 'package:untitled/Screens/DailyCalories.dart';
 import '../CustomWidgets/ExportWidget.dart';
+import 'package:untitled/Screens/TodayEats.dart';
+import 'package:untitled/Screens/WaterNecessary.dart';
 
 
 class Calcs extends StatefulWidget {
@@ -136,48 +138,103 @@ class _CalcsState extends State<Calcs> {
           Row(
             children: <Widget> [
               Expanded(
-                child: CalculatorContainer(child:Column(
+                child: CalculatorContainer(child:
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(
-                        FontAwesomeIcons.bowlFood,
-                        color: Colors.white,
-                        size: 50
-                    ),
-                    SizedBox(height: 20,),
 
-                    Text(
-                      'Bugün Yediklerim',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TodaysEat(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(top: 30),
+                          height:150,
+                          child:ListView(
+                            children: <Widget>[
+                              Container(child:Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                      FontAwesomeIcons.bowlFood,
+                                      color: Colors.white,
+                                      size: 50
+                                  ),
+                                  SizedBox(height: 20,),
+
+                                  Text(
+                                    'Yediklerim',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  )
+                                ],
+                              )),
+
+                            ],
+                          )
                       ),
-                    )
+                    ),
+
                   ],
-                )),
+                ),),
               ),
+
               Expanded(
-                child: CalculatorContainer(child:Column(
+                child: CalculatorContainer(child:
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(
-                        FontAwesomeIcons.bottleWater,
-                        color: Colors.white,
-                        size: 50
-                    ),
-                    SizedBox(height: 20,),
 
-                    Text(
-                      'Günlük Su İhtiyacı',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WaterReminder(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(top: 30),
+                          height:150,
+                          child:ListView(
+                            children: <Widget>[
+                              Container(child:Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                      FontAwesomeIcons.bottleWater,
+                                      color: Colors.white,
+                                      size: 50
+                                  ),
+                                  SizedBox(height: 20,),
+
+                                  Text(
+                                    'Su İhtiyacı',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  )
+                                ],
+                              )),
+
+                            ],
+                          )
                       ),
-                    )
+                    ),
+
                   ],
-                )),
+                ),),
               ),
             ],
           ),

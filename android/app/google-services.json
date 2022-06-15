@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "43017446323",
+    "project_id": "fitzzapp",
+    "storage_bucket": "fitzzapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43017446323:android:7d05d641aebf8d5f52e1c6",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43017446323-b2kn5ra1mnehtb656tjj3f8t4q54oue0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2oDJAF44J4gMZEMYhyj2tgCkj6IYpsyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43017446323-b2kn5ra1mnehtb656tjj3f8t4q54oue0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
